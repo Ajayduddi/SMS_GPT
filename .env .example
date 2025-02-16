@@ -1,0 +1,4 @@
+// This is an example of .env file for the SMS_GPT project
+// Copy this belowcode to .env and replace the API key with your own
+
+GEMINI_API_KEY = "replace_with_your_api_key"
