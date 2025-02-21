@@ -159,10 +159,14 @@ def get_question():
 
             flag = 1  # Ensures the script continues checking for new messages
         
-        elif Question.endswith('?') or Question.endswith('--?'):
-            detected_lang = detect_language(Question)
-            instruction = f"Answer very very shortly in {detected_lang}." if Question.endswith('?') else f"Give a detailed answer in {detected_lang}."
-            chatGPT(Question, instruction)
+        if Question.endswith('--?'):
+             detected_lang = detect_language(Question)
+             instruction = f"Give a detailed answer in {detected_lang}."
+             chatGPT(Question, instruction)
+        elif Question.endswith('?'):
+             detected_lang = detect_language(Question)
+             instruction = f"Answer very very shortly in {detected_lang}."
+             chatGPT(Question, instruction)
 
 
 # Function to handle ChatGPT responses
