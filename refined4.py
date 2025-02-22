@@ -5,6 +5,7 @@ import time
 import requests
 from langdetect import detect, LangDetectException
 from deep_translator import GoogleTranslator
+from gemini import send_message
 
 # Global Variables
 Loader = ''
@@ -21,7 +22,7 @@ NEWS_API_KEY = "bcd9b06b8b2f43cb9ac133f2b46fbc92"  # Replace with your actual AP
 # Function to open Edge browser
 def openEdge():
     global Loader
-    pyautogui.hotkey('win', '2')  
+    pyautogui.hotkey('win', '7')  
     time.sleep(0.5)
     
     while "loaded" not in Loader:
@@ -44,7 +45,7 @@ def openMessages():
     pyautogui.write('https://messages.google.com/web/conversations')
     pyautogui.press('enter')
 
-    while "Conversation" not in Loader:
+    while "Conversations" not in Loader:
         time.sleep(0.5)
         pyautogui.hotkey('ctrl', 'a')
         pyautogui.hotkey('ctrl', 'c')
@@ -120,13 +121,15 @@ def get_question():
     time.sleep(0.5)
     alltext = pyperclip.paste()
 
-    print("Clipboard content:", alltext)  # Debugging: print clipboard content
+    # print("Clipboard content:", alltext)  # Debugging: print clipboard content
     
-    pattern = r"Conversation list(.*?)\n(.*?)\n(.*?)\n"
-    match = re.search(pattern, alltext, re.DOTALL)
+    pattern = r"Conversations list.*?\n.*?\n(?!You:)([^\n]*)"
+    # pattern = r"Conversations list(.*?)\n(.*?)\n(.*?)\n"
+    match = re.search(pattern, alltext)
+    print("Match:", match)
     
     if match:
-        Question = match.group(3).strip()
+        Question = match.group(1).strip()
         print(f"Extracted Question: {Question}")  # Debugging: print extracted question
         
         if "HELP 4 -" in Question:  # If query is for joke
@@ -160,14 +163,42 @@ def get_question():
             flag = 1  # Ensures the script continues checking for new messages
         
         if Question.endswith('--?'):
-             detected_lang = detect_language(Question)
-             instruction = f"Give a detailed answer in {detected_lang}."
-             chatGPT(Question, instruction)
-        elif Question.endswith('?'):
-             detected_lang = detect_language(Question)
-             instruction = f"Answer very very shortly in {detected_lang}."
-             chatGPT(Question, instruction)
+            detected_lang = detect_language(Question)
+            instruction = f"Answer very very shortly in {detected_lang}."
+            
+            if Question.startswith('/chatgpt'): 
+                chatGPT(Question, instruction)
+            else:
+                gemini(Question)
 
+
+        elif Question.endswith('') or Question.endswith('?'):
+            detected_lang = detect_language(Question)
+            instruction = f"Give a detailed answer in {detected_lang}. with in 1200 characters"
+            
+            if Question.startswith('/chatgpt'): 
+                chatGPT(Question, instruction)
+            else:
+                gemini(Question)
+
+
+# Function to handle ChatGPT responses
+def gemini(question) :
+    global flag
+    flag = 1
+    
+    for _ in range(3):
+        pyautogui.press('tab')
+    for _ in range(3            ):
+        pyautogui.press('up')
+    pyautogui.press('enter')
+    time.sleep(1)
+    
+    response = send_message( Question)
+    pyperclip.copy(response)
+    pyautogui.hotkey('ctrl', 'v')
+    pyautogui.press('enter')
+    return
 
 # Function to handle ChatGPT responses
 def chatGPT(question, instruction):
@@ -186,21 +217,32 @@ def chatGPT(question, instruction):
     pyautogui.hotkey('alt', 'd')
     pyautogui.write('https://chat.openai.com')
     pyautogui.press('enter')
-    time.sleep(5)
+    time.sleep(4)
 
     pyperclip.copy(f"{question} {instruction}")  
     time.sleep(0.5)
     
-    pyautogui.hotkey('ctrl', 'v')
-    pyautogui.press('enter')
-    time.sleep(10)
+    if question.endswith('--?'):
+        pyautogui.hotkey('ctrl', 'v')
+        pyautogui.press('enter')
+        time.sleep(6)
 
-    for _ in range(6):
-        pyautogui.hotkey('shift', 'tab')
-        time.sleep(0.2)
-    pyautogui.press('enter')
-    time.sleep(0.5)
-    #pyautogui.hotkey('ctrl', 'c')
+        for _ in range(6):
+            pyautogui.hotkey('shift', 'tab')
+            time.sleep(0.2)
+        pyautogui.press('enter')
+        time.sleep(0.5)
+    else :
+        pyautogui.hotkey('ctrl', 'v')
+        pyautogui.press('enter')
+        time.sleep(11)
+
+        for _ in range(7):
+            pyautogui.hotkey('shift', 'tab')
+            time.sleep(0.2)
+        pyautogui.press('enter')
+        time.sleep(0.5)
+ 
 
     pyautogui.hotkey('ctrl', 'w')
     time.sleep(0.5)
