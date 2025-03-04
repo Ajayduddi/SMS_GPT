@@ -298,13 +298,13 @@ def record_audio():
     return
 
 # Open required applications and start processing messages
-# openEdge()
-# openMessages()
+openEdge()
+openMessages()
 
-record_audio()
+# record_audio()
 
-# while True:
-#     get_question()
-#     if flag == 1:
-#         openMessages()
-#         flag = 0
+while True:
+    get_question()
+    if flag == 1:
+        openMessages()
+        flag = 0
