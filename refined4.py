@@ -5,12 +5,19 @@ import time
 import requests
 from langdetect import detect, LangDetectException
 from deep_translator import GoogleTranslator
-from gemini import send_message
+from gemini import send_audio, send_message
+import pyaudio
+import wave
 
 # Global Variables
 Loader = ''
 Question = ''
 flag = 0
+FORMATE = pyaudio.paInt16
+CHANNEL = 1
+RATE = 44100
+CHUNK = 1024
+OUTPUT_FILENAME = "output.wav"
 
 pyautogui.FAILSAFE = True  
 
@@ -189,7 +196,7 @@ def gemini(question) :
     
     for _ in range(3):
         pyautogui.press('tab')
-    for _ in range(3            ):
+    for _ in range(3):
         pyautogui.press('up')
     pyautogui.press('enter')
     time.sleep(1)
@@ -249,12 +256,55 @@ def chatGPT(question, instruction):
     pyautogui.hotkey('ctrl', 'v')
     pyautogui.press('enter')
 
-# Open required applications and start processing messages
-openEdge()
-openMessages()
 
-while True:
-    get_question()
-    if flag == 1:
-        openMessages()
-        flag = 0
+# Audio recording
+def record_audio():
+    audio  = pyaudio.PyAudio()
+    stream = audio.open(format=FORMATE, channels=CHANNEL, rate=RATE, input=True, frames_per_buffer=CHUNK)
+    frames = []
+
+    for _ in range(28):
+        pyautogui.press('tab')
+    pyautogui.press('enter')
+    time.sleep(1)
+    print("Recording...")
+    i = 500
+    while i>0:
+        try:
+            data = stream.read(CHUNK)
+            frames.append(data)
+            i-=1
+        except KeyboardInterrupt:
+            break
+    
+    print("Done recording.")
+    stream.stop_stream()
+    stream.close()
+    audio.terminate()
+
+    wf = wave.open(OUTPUT_FILENAME, 'wb')
+    wf.setnchannels(CHANNEL)
+    wf.setsampwidth(audio.get_sample_size(FORMATE))
+    wf.setframerate(RATE)
+    wf.writeframes(b''.join(frames))
+    wf.close()
+    
+    name = "./output.wav"
+    response = send_audio(name)
+    print(response)
+    pyperclip.copy(response)
+    pyautogui.hotkey('ctrl', 'v')
+    pyautogui.press('enter')
+    return
+
+# Open required applications and start processing messages
+# openEdge()
+# openMessages()
+
+record_audio()
+
+# while True:
+#     get_question()
+#     if flag == 1:
+#         openMessages()
+#         flag = 0
