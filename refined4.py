@@ -1,4 +1,5 @@
 import pyautogui
+from pyparsing import C
 import pyperclip
 import re
 import time
@@ -15,7 +16,7 @@ Question = ''
 flag = 0
 FORMATE = pyaudio.paInt16
 CHANNEL = 1
-RATE = 44100
+RATE = 48000
 CHUNK = 1024
 OUTPUT_FILENAME = "output.wav"
 
@@ -64,8 +65,8 @@ def openMessages():
 
 # Function to open the latest chat
 def open_latest_chat():
-    time.sleep(1)
-    for _ in range(3):
+    time.sleep(2)
+    for _ in range(4):
         pyautogui.press('tab')
         time.sleep(0.2)
     pyautogui.press('enter')
@@ -169,6 +170,10 @@ def get_question():
 
             flag = 1  # Ensures the script continues checking for new messages
         
+        if Question.startswith('Audio clip'):
+            record_audio()
+            flag = 1  # Ensures the script continues checking for new messages
+        
         if Question.endswith('--?'):
             detected_lang = detect_language(Question)
             instruction = f"Answer very very shortly in {detected_lang}."
@@ -256,27 +261,59 @@ def chatGPT(question, instruction):
     pyautogui.hotkey('ctrl', 'v')
     pyautogui.press('enter')
 
+#found loopback device
+def find_loopback_device():
+    """Finds the system audio capture device supporting WASAPI loopback."""
+    audio = pyaudio.PyAudio()
+    
+    for i in range(audio.get_device_count()):
+        dev_info = audio.get_device_info_by_index(i)
+        print(f"Device {i}: {dev_info['name']}")
+        
+    print("No loopback device found. Enable 'Stereo Mix' in sound settings.")
+    return None
 
-# Audio recording
+#Audio recording
 def record_audio():
-    audio  = pyaudio.PyAudio()
-    stream = audio.open(format=FORMATE, channels=CHANNEL, rate=RATE, input=True, frames_per_buffer=CHUNK)
+    """Records system audio using the loopback device."""
+    audio = pyaudio.PyAudio()
+    device_index = 18
+
+    device_info = audio.get_device_info_by_index(device_index)
+    print(f"Supported sample rate: {device_info['defaultSampleRate']}")
+
+    # Open WASAPI loopback stream
+    stream = audio.open(format=FORMATE, channels=CHANNEL, rate=RATE, 
+                        input=True, input_device_index=device_index, 
+                        frames_per_buffer=CHUNK)
+
+
     frames = []
 
-    for _ in range(28):
+    # Open top message
+    for _ in range(3):
         pyautogui.press('tab')
     pyautogui.press('enter')
+    for _ in range(3):
+        pyautogui.press('up')
     time.sleep(1)
-    print("Recording...")
-    i = 500
-    while i>0:
+
+    for _ in range(31):
+        pyautogui.press('tab')
+
+    time.sleep(0.5)
+    pyautogui.press('enter')
+
+    print("Recording system audio...")
+    i = 600
+    while i > 0:
         try:
             data = stream.read(CHUNK)
             frames.append(data)
-            i-=1
+            i -= 1
         except KeyboardInterrupt:
             break
-    
+
     print("Done recording.")
     stream.stop_stream()
     stream.close()
@@ -288,14 +325,29 @@ def record_audio():
     wf.setframerate(RATE)
     wf.writeframes(b''.join(frames))
     wf.close()
-    
+
     name = "./output.wav"
     response = send_audio(name)
     print(response)
+
     pyperclip.copy(response)
+    for _ in range(6):
+        pyautogui.press('tab')
+
     pyautogui.hotkey('ctrl', 'v')
     pyautogui.press('enter')
-    return
+
+    # Delete audio message
+    for _ in range(35):
+        pyautogui.press('tab')
+    pyautogui.press('enter')
+    time.sleep(1)
+    pyautogui.press('down')
+    pyautogui.press('enter')
+    time.sleep(1)
+    pyautogui.press('tab')
+    pyautogui.press('enter')
+    time.sleep(0.5)
 
 # Open required applications and start processing messages
 openEdge()
