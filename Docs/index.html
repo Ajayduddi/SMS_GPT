@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS_GPT - Smart SMS Automation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+
+    <!-- Hero Section -->
+    <section class="hero-section container">
+        <div class="blob blob-1 animate-float"></div>
+        <div class="blob blob-2 animate-float-delayed"></div>
+
+        <div class="md-grid-2 gap-8 items-center" style="width: 100%;">
+            <!-- Content -->
+            <div class="hero-content">
+                <h1 class="gradient-text">SMSGPT</h1>
+                <h2 style="color: var(--text-muted); font-weight: 400; margin-top: 0.5rem;">A Dynamic SMS-Based
+                    Conversational AI System</h2>
+                <p style="font-size: 1.25rem; margin-top: 1.5rem;">
+                    Making AI accessible to everyone. Get real-time, context-aware responses over SMS using Google's
+                    Gemini AI — even on basic feature phones.
+                </p>
+                <div class="flex gap-4" style="margin-top: 2rem;">
+                    <a href="#installation" class="btn btn-primary">
+                        <i class="fa-solid fa-download"></i> Install Now
+                    </a>
+                    <a href="#features" class="btn btn-glass">
+                        <i class="fa-solid fa-star"></i> View Features
+                    </a>
+                </div>
+            </div>
+
+            <!-- Phone Mockup Animation -->
+            <div class="phone-mockup glass animate-on-scroll">
+                <!-- Status Bar -->
+                <div class="flex justify-between items-center"
+                    style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <div class="text-xs">9:41</div>
+                    <div class="flex gap-2">
+                        <i class="fa-solid fa-signal text-xs"></i>
+                        <i class="fa-solid fa-wifi text-xs"></i>
+                        <i class="fa-solid fa-battery-full text-xs"></i>
+                    </div>
+                </div>
+                <!-- Chat Header -->
+                <div class="flex items-center gap-3" style="padding: 1rem;">
+                    <div
+                        style="width: 40px; height: 40px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa-solid fa-robot text-white"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-sm">SMS_GPT</div>
+                        <div class="text-xs text-secondary">Online with Gemini</div>
+                    </div>
+                </div>
+                <!-- Messages Container -->
+                <div id="chat-messages"
+                    style="flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column;">
+                    <!-- Messages will be injected by script.js -->
+                </div>
+                <!-- Input Mockup -->
+                <div style="padding: 1rem; border-top: 1px solid rgba(255,255,255,0.05);">
+                    <div
+                        style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 1.5rem; color: var(--text-muted); font-size: 0.8rem;">
+                        Text message...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="container" style="padding: 5rem 1.5rem;">
+        <div class="text-center" style="margin-bottom: 4rem;">
+            <h2 class="animate-on-scroll">Powerful Features</h2>
+            <p class="animate-on-scroll">More than just a chatbot. A complete SMS automation suite.</p>
+        </div>
+
+        <div class="md-grid-3 gap-4">
+            <!-- Feature 1 -->
+            <div class="card animate-on-scroll">
+                <div class="icon-box glass">
+                    <i class="fa-solid fa-brain text-primary"></i>
+                </div>
+                <h3>Gemini AI Powered</h3>
+                <p class="text-sm">Uses Google's Gemini models to understand context and reply intelligently to any SMS
+                    text.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="card animate-on-scroll">
+                <div class="icon-box glass">
+                    <i class="fa-solid fa-mobile-screen text-accent"></i>
+                </div>
+                <h3>Device Aware</h3>
+                <p class="text-sm">Detects if the user is on a smartphone (rich text) or feature phone (short text) and
+                    adapts responses.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="card animate-on-scroll">
+                <div class="icon-box glass">
+                    <i class="fa-solid fa-globe text-secondary"></i>
+                </div>
+                <h3>Multi-Language</h3>
+                <p class="text-sm">Auto-detects incoming languages and responds natively. Includes translation tools.
+                </p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="card animate-on-scroll">
+                <div class="icon-box glass">
+                    <i class="fa-solid fa-newspaper text-primary"></i>
+                </div>
+                <h3>News & Jokes</h3>
+                <p class="text-sm">Built-in commands like "HELP 4" for jokes and "HELP 5" for region-specific news
+                    summaries.</p>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="card animate-on-scroll">
+                <div class="icon-box glass">
+                    <i class="fa-solid fa-microphone text-accent"></i>
+                </div>
+                <h3>Audio Replies</h3>
+                <p class="text-sm">Can record system audio and send it as a voice message directly through the browser.
+                </p>
+            </div>
+
+            <!-- Feature 6 -->
+            <div class="card animate-on-scroll">
+                <div class="icon-box glass">
+                    <i class="fa-solid fa-robot text-secondary"></i>
+                </div>
+                <h3>Automation</h3>
+                <p class="text-sm">Runs locally using PyAutoGUI to control Google Messages Web securely on your PC.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Structure Section -->
+    <section id="codebase" class="container" style="padding: 5rem 1.5rem;">
+        <div class="text-center" style="margin-bottom: 3rem;">
+            <h2>Understanding the Code</h2>
+            <p>The project is built with Python and uses desktop automation to control the browser.</p>
+        </div>
+
+        <!-- Architecture Image -->
+        <div class="glass animate-on-scroll" style="padding: 2rem; border-radius: 1.5rem; margin-bottom: 3rem;">
+            <div class="md-grid-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-primary" style="margin-bottom: 1rem;"><i class="fa-solid fa-sitemap"></i> System
+                        Architecture</h3>
+                    <p class="text-sm text-muted">
+                        When a user sends an SMS, it syncs to Google Messages Web via their paired Android phone.
+                        The Python script monitors the browser, extracts new messages, sends them to Gemini AI for
+                        processing,
+                        and automatically types the response back into the chat.
+                    </p>
+                </div>
+                <div>
+                    <img src="System architecture.jpeg" alt="SMSGPT System Architecture"
+                        style="width: 100%; border-radius: 1rem; border: 1px solid var(--glass-border);">
+                </div>
+            </div>
+        </div>
+
+        <!-- File Cards -->
+        <div class="md-grid-3 gap-4">
+            <div class="card animate-on-scroll">
+                <div class="flex items-center gap-3" style="margin-bottom: 1rem;">
+                    <div
+                        style="width: 40px; height: 40px; background: rgba(59, 130, 246, 0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa-solid fa-code text-primary"></i>
+                    </div>
+                    <h4 style="margin: 0;">main.py</h4>
+                </div>
+                <p class="text-sm text-muted">The core automation engine. Launches Edge browser, navigates to Google
+                    Messages, and runs a continuous loop to detect and respond to new SMS messages.</p>
+                <div class="text-xs text-muted"
+                    style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--glass-border);">
+                    <strong>Key:</strong> <code>SMSBot</code> class, <code>process_loop()</code>
+                </div>
+            </div>
+
+            <div class="card animate-on-scroll">
+                <div class="flex items-center gap-3" style="margin-bottom: 1rem;">
+                    <div
+                        style="width: 40px; height: 40px; background: rgba(139, 92, 246, 0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa-solid fa-brain text-accent"></i>
+                    </div>
+                    <h4 style="margin: 0;">gemini.py</h4>
+                </div>
+                <p class="text-sm text-muted">Handles communication with Google's Generative AI API. Manages chat
+                    sessions, sends prompts, and returns AI-generated responses.</p>
+                <div class="text-xs text-muted"
+                    style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--glass-border);">
+                    <strong>Key:</strong> <code>send_message()</code>, <code>send_audio()</code>
+                </div>
+            </div>
+
+            <div class="card animate-on-scroll">
+                <div class="flex items-center gap-3" style="margin-bottom: 1rem;">
+                    <div
+                        style="width: 40px; height: 40px; background: rgba(16, 185, 129, 0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa-solid fa-gear text-secondary"></i>
+                    </div>
+                    <h4 style="margin: 0;">config.py</h4>
+                </div>
+                <p class="text-sm text-muted">Central configuration file. Stores API keys, URLs, audio settings, and
+                    other environment variables used across the project.</p>
+                <div class="text-xs text-muted"
+                    style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--glass-border);">
+                    <strong>Key:</strong> <code>GEMINI_API_KEY</code>, <code>NEWS_API_KEY</code>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section id="installation" class="container" style="padding: 0 1.5rem 5rem 1.5rem;">
+        <div class="md-grid-2 gap-8 items-center">
+            <div class="animate-on-scroll">
+                <h2>Installation & Setup</h2>
+                <p>Follow these steps to get the bot running on your local machine.</p>
+
+                <div style="margin-top: 2rem;">
+                    <div class="flex gap-3" style="margin-bottom: 1rem; align-items: flex-start;">
+                        <div
+                            style="width: 24px; height: 24px; min-width: 24px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold;">
+                            1</div>
+                        <div>
+                            <strong>Clone & Install</strong>
+                            <p class="text-sm text-muted">Download the source code and install Python dependencies.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3" style="margin-bottom: 1rem; align-items: flex-start;">
+                        <div
+                            style="width: 24px; height: 24px; min-width: 24px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold;">
+                            2</div>
+                        <div>
+                            <strong>Configure API Key</strong>
+                            <p class="text-sm text-muted">Get your key from Google AI Studio and set
+                                <code>GEMINI_API_KEY</code>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3" style="align-items: flex-start;">
+                        <div
+                            style="width: 24px; height: 24px; min-width: 24px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold;">
+                            3</div>
+                        <div>
+                            <strong>Pair Phone</strong>
+                            <p class="text-sm text-muted">Link your Android phone to Google Messages Web in the Edge
+                                browser.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="animate-on-scroll">
+                <div class="code-block">
+                    <!-- Toast Notification -->
+                    <div id="toast">Copied to clipboard!</div>
+
+                    <button id="copyBtn" class="copy-btn" onclick="copyCode()">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+
+                    <div class="code-line">
+                        <span class="code-prompt">$</span>
+                        <span>git clone https://github.com/Ajayduddi/SMS_GPT.git</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="code-prompt">$</span>
+                        <span>cd SMS_GPT</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="code-prompt">$</span>
+                        <span>pip install -r requirements.txt</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="code-prompt">#</span>
+                        <span class="text-muted">Set up your API Key...</span>
+                    </div>
+                    <div class="code-line">
+                        <span class="code-prompt">$</span>
+                        <span>python main.py</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interaction Guide -->
+    <section id="interaction" class="container" style="padding: 0 1.5rem 5rem 1.5rem;">
+        <div class="text-center" style="margin-bottom: 3rem;">
+            <h2>How to Interact</h2>
+            <p>Send an SMS to your linked phone number. Here are the available commands.</p>
+        </div>
+
+        <div class="md-grid-2 gap-8 items-center">
+            <!-- Command List -->
+            <div class="card">
+                <h3 class="text-primary" style="margin-bottom: 1.5rem;"><i class="fa-solid fa-terminal"></i> SMS
+                    Commands</h3>
+
+                <div class="flex flex-col gap-3">
+                    <div class="glass" style="padding: 1rem; border-radius: 0.75rem;">
+                        <div class="flex items-center gap-2" style="margin-bottom: 0.5rem;">
+                            <i class="fa-solid fa-comment text-primary"></i>
+                            <strong>Ask Anything</strong>
+                        </div>
+                        <p class="text-sm text-muted" style="margin-bottom: 0.5rem;">Send any question and get an
+                            AI-powered response.</p>
+                        <code
+                            style="background: rgba(0,0,0,0.3); padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.8rem;">What is machine learning?</code>
+                    </div>
+
+                    <div class="glass" style="padding: 1rem; border-radius: 0.75rem;">
+                        <div class="flex items-center gap-2" style="margin-bottom: 0.5rem;">
+                            <i class="fa-solid fa-face-laugh text-secondary"></i>
+                            <strong>Get a Joke</strong>
+                        </div>
+                        <p class="text-sm text-muted" style="margin-bottom: 0.5rem;">Request a joke in any language.</p>
+                        <code
+                            style="background: rgba(0,0,0,0.3); padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.8rem;">HELP 4 - en</code>
+                        <span class="text-xs text-muted" style="margin-left: 0.5rem;">or</span>
+                        <code
+                            style="background: rgba(0,0,0,0.3); padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.8rem;">HELP 4 - telugu</code>
+                    </div>
+
+                    <div class="glass" style="padding: 1rem; border-radius: 0.75rem;">
+                        <div class="flex items-center gap-2" style="margin-bottom: 0.5rem;">
+                            <i class="fa-solid fa-newspaper text-accent"></i>
+                            <strong>Get News</strong>
+                        </div>
+                        <p class="text-sm text-muted" style="margin-bottom: 0.5rem;">Fetch latest headlines for a
+                            region.</p>
+                        <code
+                            style="background: rgba(0,0,0,0.3); padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.8rem;">HELP 5 - en US</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pro Tips -->
+            <div class="card">
+                <h3 class="text-accent" style="margin-bottom: 1.5rem;"><i class="fa-solid fa-lightbulb"></i> Pro Tips
+                </h3>
+
+                <div class="flex flex-col gap-3">
+                    <div class="flex gap-3" style="align-items: flex-start;">
+                        <div
+                            style="width: 28px; height: 28px; min-width: 28px; background: rgba(16, 185, 129, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-language text-secondary text-sm"></i>
+                        </div>
+                        <div>
+                            <strong>Auto Language Detection</strong>
+                            <p class="text-sm text-muted">Send in Hindi, Telugu, or Spanish — the bot replies in the
+                                same language automatically.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3" style="align-items: flex-start;">
+                        <div
+                            style="width: 28px; height: 28px; min-width: 28px; background: rgba(59, 130, 246, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-mobile text-primary text-sm"></i>
+                        </div>
+                        <div>
+                            <strong>Feature Phone Mode</strong>
+                            <p class="text-sm text-muted">End your question with <code>--?</code> to get shorter
+                                responses for keypad phones.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3" style="align-items: flex-start;">
+                        <div
+                            style="width: 28px; height: 28px; min-width: 28px; background: rgba(139, 92, 246, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-clock text-accent text-sm"></i>
+                        </div>
+                        <div>
+                            <strong>Response Time</strong>
+                            <p class="text-sm text-muted">Responses typically arrive within 5-15 seconds depending on
+                                query complexity.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass"
+                        style="padding: 1rem; border-radius: 0.75rem; margin-top: 0.5rem; text-align: center;">
+                        <i class="fa-solid fa-desktop text-muted"></i>
+                        <p class="text-sm text-muted" style="margin: 0.5rem 0 0 0;">Keep the Google Messages browser tab
+                            open and visible while using.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Usage Section -->
+    </div>
+    </div>
+    </div>
+    </section>
+
+    <!-- Usage Section -->
+    <section id="usage" class="container text-center animate-on-scroll" style="padding-bottom: 5rem;">
+        <h2>Ready to run?</h2>
+        <p style="max-width: 600px; margin: 0 auto 2rem auto;">
+            Ensure your browser is open and your phone is connected. Run the script and let the AI take over your
+            conversations.
+        </p>
+        <p class="text-sm text-muted" style="margin-bottom: 2rem;">
+            ⚠️ <strong>Note:</strong> The bot takes control of your mouse and keyboard. Do not use the computer while it
+            is active.
+        </p>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: rgba(2, 6, 23, 0.5); border-top: 1px solid rgba(255,255,255,0.05); padding: 2rem 0;">
+        <div class="container flex justify-between items-center">
+            <div class="text-sm text-muted">
+                Developed by Ajay Duddi & Vasundhara Gurram.
+            </div>
+            <div class="flex gap-4">
+                <a href="https://github.com/Ajayduddi/SMS_GPT" target="_blank" class="text-muted"><i
+                        class="fa-brands fa-github"></i></a>
+                <!-- <a href="#" class="text-muted"><i class="fa-brands fa-twitter"></i></a> -->
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

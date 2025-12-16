@@ -1,0 +1,10 @@
+flask
+twilio
+pyautogui
+pyparsing
+pyperclip
+requests
+langdetect
+deep-translator
+pyaudio
+google-generativeai
